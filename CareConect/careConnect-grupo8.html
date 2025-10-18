@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareConect - Tu Red de Cuidado Profesional</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #3d3939;
+            overflow-x: hidden;
+            background: #f4f7f6;
+        }
+
+        /* ------------------------------- */
+        /* 1. Fondo Animado lol */
+        /* ------------------------------- */
+        .animated-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            list-style: none;
+            display: block;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 25s infinite linear;
+            bottom: -150px;
+        }
+
+        .shape.s1 { width: 20px; height: 20px; left: 10%; animation-delay: 2s; animation-duration: 18s; }
+        .shape.s2 { width: 80px; height: 80px; left: 20%; animation-delay: 0s; animation-duration: 22s; }
+        .shape.s3 { width: 20px; height: 20px; left: 35%; animation-delay: 4s; animation-duration: 15s; }
+        .shape.s4 { width: 60px; height: 60px; left: 50%; animation-delay: 0s; animation-duration: 20s; }
+        .shape.s5 { width: 20px; height: 20px; left: 65%; animation-delay: 1s; animation-duration: 16s; }
+        .shape.s6 { width: 110px; height: 110px; left: 75%; animation-delay: 3s; animation-duration: 25s; }
+        .shape.s7 { width: 40px; height: 40px; left: 90%; animation-delay: 5s; animation-duration: 19s; }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+
+        /* ------------------------------- */
+        /* 2. Header y Menú de Navegación */
+        /* ------------------------------- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: #333;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            animation: slideDown 0.6s ease-out;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            overflow: hidden;
+            padding: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .logo:hover .logo-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        nav a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+
+        nav a:hover::after { width: 80%; }
+        nav a:hover { color: #667eea; }
+
+        /* ------------------------------- */
+        /* 3. Menú Hamburguesa que si funciona xd */
+        /* ------------------------------- */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+            width: 30px;
+            height: 22px;
+            position: relative;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: #333;
+            border-radius: 3px;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            position: absolute;
+        }
+
+        .hamburger-icon span:nth-child(1) { top: 0; }
+        .hamburger-icon span:nth-child(2) { top: 9px; }
+        .hamburger-icon span:nth-child(3) { top: 18px; }
+
+        .menu-toggle.is-active .hamburger-icon span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .menu-toggle.is-active .hamburger-icon span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        .menu-toggle.is-active .hamburger-icon span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* ------------------------------- */
+        /* 4. Sección Hero con Parallax */
+        /* ------------------------------- */
+        .hero {
+            margin-top: 80px;
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            /* Transición para el efecto parallax de JS */
+            transition: opacity 0.1s linear, transform 0.1s linear; 
+            will-change: opacity, transform;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease-out;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.3s both;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.4s;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out 0.6s both;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before { width: 300px; height: 300px; }
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        }
+
+        /* ------------------------------- */
+        /* 5. Contenido General y Animaciones de Scroll */
+        /* ------------------------------- */
+        .content-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 3rem 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+        
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .features-grid .reveal-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+        .features-grid .reveal-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+        .features-grid .reveal-on-scroll:nth-child(3) { transition-delay: 0.3s; }
+        .features-grid .reveal-on-scroll:nth-child(4) { transition-delay: 0.1s; }
+        .features-grid .reveal-on-scroll:nth-child(5) { transition-delay: 0.2s; }
+        .features-grid .reveal-on-scroll:nth-child(6) { transition-delay: 0.3s; }
+
+        .team-grid .reveal-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+        .team-grid .reveal-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+        .team-grid .reveal-on-scroll:nth-child(3) { transition-delay: 0.3s; }
+        .team-grid .reveal-on-scroll:nth-child(4) { transition-delay: 0.4s; }
+        .team-grid .reveal-on-scroll:nth-child(5) { transition-delay: 0.5s; }
+
+
+        .section-title {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .section-title.light-text {
+            -webkit-text-fill-color: #f5f5f5;
+        }
+
+        .intro-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .intro-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1.2rem;
+        }
+        .intro-highlights {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .highlight-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .highlight-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+        .highlight-text h4 {
+            color: #667eea;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+        .highlight-text p { margin: 0; font-size: 0.95rem; color: #666; }
+        .more-info { text-align: center; margin-top: 2.5rem; }
+        .more-info a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+        .more-info a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+            background: #f0f2ff;
+        }
+
+        .video-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .video-container {
+            background: #fff;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px dashed #d1d9e6;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .video-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+        .video-placeholder {
+            color: #667eea;
+            font-size: 1.2rem;
+            z-index: 1;
+            text-align: center;
+        }
+        .video-placeholder strong {
+            display: block;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .features {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf3 100%);
+            padding: 5rem 2rem;
+            position: relative;
+        }
+        .features .section-title {
+            color: #333;
+             -webkit-text-fill-color: initial;
+        }
+        .features-container { max-width: 1200px; margin: 0 auto; }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+            transition: all 0.4s;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.25);
+            border-color: #667eea;
+        }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        .feature-card p { color: #666; line-height: 1.6; }
+
+        .about {
+            max-width: 1200px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+        }
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #e0e6f3;
+        }
+        .about-text p { margin-bottom: 1.2rem; }
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        .stat-card:hover {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .stat-card div:last-child {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* ------------------------------- */
+        /* 6. Simulador de App version 2.0✨ */
+        /* ------------------------------- */
+        .simulator {
+            background: linear-gradient(87deg, #f5f7fa 0%, #e8ecf3 100%);
+            padding: 5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .simulator .section-title {
+             -webkit-text-fill-color: initial;
+        }
+        .phone-mockup {
+            max-width: 420px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 45px;
+            padding: 18px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+            animation: phoneFloat 4s infinite ease-in-out;
+            position: relative;
+        }
+
+        @keyframes phoneFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .phone-notch {
+            background: #1a1a1a;
+            width: 150px;
+            height: 25px;
+            margin: 0 auto;
+            border-radius: 0 0 20px 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .phone-screen {
+            background: white;
+            border-radius: 35px;
+            overflow: hidden;
+            height: 750px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+            position: relative; /* Para las vistas de app */
+        }
+        .app-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.8rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10; /* Encima del contenido!!!*/
+        }
+        .app-header-title { font-weight: bold; font-size: 1.3rem; }
+        
+        .app-content {
+            height: 650px; /* Altura - header */
+            background: #f8f9fa;
+            position: relative; /* Para las vistas internas */
+            overflow: hidden; /* Oculta el slide */
+        }
+
+        /* Contenedor de Vistas de App */
+        .app-view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background: #f8f9fa;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 1;
+        }
+
+        /* Vista de Navegación Principal (Tabs) */
+        #main-view {
+            z-index: 2; /* Está al frente */
+            transform: translateX(0);
+        }
+
+        /* Vista de Perfil (Oculta por defecto) */
+        #profile-view {
+            z-index: 3; /* Se desliza por encima */
+            transform: translateX(100%);
+            background: white;
+        }
+
+        #main-view.navigating-to-profile {
+            transform: translateX(-30%); /* Se mueve un poco a la izq */
+            opacity: 0.5;
+        }
+
+        #profile-view.is-visible {
+            transform: translateX(0);
+        }
+        
+        /* Scrollbar para la app */
+        .app-view::-webkit-scrollbar { width: 6px; }
+        .app-view::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+        .app-view::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+        .app-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .app-tab {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .app-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transform: scale(1.05);
+        }
+        
+        /* Contenedores de Pestañas */
+        .app-tab-content { display: none; }
+        .app-tab-content.active { display: block; animation: tabFadeIn 0.5s ease; }
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Estilos de la app (Calendario, etc.) */
+        .app-section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            margin: 1.5rem 0 1rem 0;
+        }
+        .calendar-widget {
+            background: white;
+            padding: 1rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .calendar-month { font-weight: bold; color: #667eea; }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        .calendar-day.header {
+            font-weight: bold;
+            color: #999;
+            cursor: default;
+        }
+        .calendar-day.other-month { color: #ccc; }
+        .calendar-day.available {
+            background: #eef2ff;
+            color: #667eea;
+            font-weight: 600;
+        }
+        .calendar-day.available:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.1);
+        }
+        .calendar-day.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.5);
+        }
+
+        .time-slots {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .time-slot {
+            padding: 0.6rem 1rem;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .time-slot:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+        .time-slot.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            font-weight: 600;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .chip {
+            padding: 0.6rem 1.2rem;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .chip:hover, .chip.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+            transform: scale(1.05);
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .professional-card {
+            background: white;
+            border: 1px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative; /* Para el corazón */
+        }
+        .professional-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            transform: scale(1.02);
+        }
+        .pro-avatar {
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            object-fit: cover; /* Para imágenes reales */
+        }
+        .pro-info { flex-grow: 1; }
+        .pro-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.3rem;
+            font-size: 1.05rem;
+        }
+        .pro-specialty { color: #666; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .pro-rating { color: #f39c12; font-size: 0.9rem; }
+        .pro-price {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1rem;
+            align-self: flex-start;
+        }
+        .pro-badge {
+            display: inline-block;
+            background: #e6f7ee;
+            color: #008744;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        .pro-favorite {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 5; /* Asegura que esté por encima */
+        }
+        .pro-favorite:hover {
+            transform: scale(1.2);
+        }
+        .pro-favorite.favorited {
+            color: #ff4d4d;
+            animation: heartBeat 0.4s ease;
+        }
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.4); }
+            100% { transform: scale(1); }
+        }
+
+        /* Botón de Confirmar Cita */
+        .confirm-btn {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .confirm-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Notificación Toast */
+        .toast-notification {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translate(-50%, 150%);
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .toast-notification.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        /* Vista de Perfil */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+        .profile-back-btn {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0 0.5rem;
+        }
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .profile-info h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin: 0;
+        }
+        .profile-info p {
+            font-size: 1rem;
+            color: #667eea;
+            margin: 0;
+        }
+        .profile-body h4 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.3rem;
+            display: inline-block;
+        }
+        .profile-body p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.7;
+        }
+        .profile-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .profile-tags .chip {
+            background: #eef2ff;
+            color: #667eea;
+            border-color: #eef2ff;
+            font-weight: 600;
+        }
+        .no-favorites {
+            text-align: center;
+            color: #999;
+            padding: 3rem 1rem;
+            font-size: 1rem;
+        }
+        .no-favorites-icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* ------------------------------- */
+        /* 7. QUE EQUIPO? 🗣️LINCES */
+        /* ------------------------------- */
+        .team {
+            max-width: 1200px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 2rem;
+        }
+        .team-card {
+            background: white;
+            padding: 2.5rem 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+            text-align: center;
+            transition: all 0.4s;
+            border: 2px solid transparent;
+        }
+        .team-card:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.25);
+            border-color: #667eea;
+        }
+        .team-avatar {
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            transition: all 0.4s;
+            overflow: hidden;
+            border: 4px solid white;
+        }
+        .team-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .team-card:hover .team-avatar {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+        }
+        .team-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .team-role {
+            color: #667eea;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        /* ------------------------------- */
+        /* 8. Footer */
+        /* ------------------------------- */
+        footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 5rem;
+        }
+        footer p { margin: 0.5rem 0; opacity: 0.9; }
+
+        /* ------------------------------- */
+        /* 9. Responsividad */
+        /* ------------------------------- */
+        @media (max-width: 768px) {
+            nav { padding: 0 1.5rem; }
+            .menu-toggle { display: block; }
+            
+            nav ul {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                left: 100%;
+                width: 100%;
+                height: 100vh;
+                background: white;
+                gap: 2.5rem;
+                transition: left 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+            }
+
+            nav ul.is-active {
+                left: 0;
+            }
+
+            nav ul a { font-size: 1.5rem; }
+            nav a:hover { color: #667eea; background: none; }
+            nav a:hover::after { width: 0; }
+
+            .hero { padding: 4rem 1.5rem; margin-top: 70px; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .cta-button { padding: 1rem 2rem; font-size: 1rem; }
+
+            .content-section, .about, .team, .video-section {
+                margin-left: 1rem;
+                margin-right: 1rem;
+                padding: 2rem 1.5rem;
+            }
+            .features { padding: 3rem 1.5rem; }
+
+            .intro-content { grid-template-columns: 1fr; }
+            .video-container { min-height: 300px; padding: 2rem 1rem; }
+            .features h2 { font-size: 2rem; }
+            .features-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .about-content { grid-template-columns: 1fr; gap: 2rem; }
+            .stats { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            
+            .phone-mockup {
+                max-width: 100%;
+                margin: 1rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo { font-size: 1.2rem; }
+            .logo-icon { width: 40px; height: 40px; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+
+            .section-title { font-size: 1.8rem; }
+            .stat-card { padding: 1.5rem; }
+            .stat-number { font-size: 2.2rem; }
+
+            .app-tab { padding: 0.8rem 0.5rem; font-size: 0.85rem;}
+            .app-view { padding: 1rem; }
+            .profile-header { flex-direction: column; text-align: center; gap: 0.5rem; }
+            .profile-back-btn { position: absolute; top: 0; left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg">
+        <ul class="floating-shapes">
+            <li class="shape s1"></li>
+            <li class="shape s2"></li>
+            <li class="shape s3"></li>
+            <li class="shape s4"></li>
+            <li class="shape s5"></li>
+            <li class="shape s6"></li>
+            <li class="shape s7"></li>
+        </ul>
+    </div>
+
+    <header>
+        <nav>
+            <a href="#inicio" class="logo">
+                <div class="logo-icon">
+                    <img src="https://api.iconify.design/medical-icon:health-services.svg?color=%23ffffff" alt="CareConect Logo">
+                </div>
+                <span>CareConect</span>
+            </a>
+            
+            <ul id="nav-menu">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#acerca">Acerca de</a></li>
+                <li><a href="#caracteristicas">Características</a></li>
+                <li><a href="#simulador">Demo</a></li>
+                <li><a href="#equipo">Equipo</a></li>
+            </ul>
+
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">
+                <div class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div class="hero-content" id="hero-content">
+                <h1>Conectando Cuidado con Confianza</h1>
+                <p>Tu red inteligente de profesionales certificados en asistencia terapéutica, disponibles cuando más los necesitas.</p>
+                <a href="#simulador" class="cta-button">Explorar la Plataforma</a>
+            </div>
+        </section>
+
+        <section id="acerca" class="content-section reveal-on-scroll">
+            <h2 class="section-title">¿Qué es CareConect?</h2>
+            <div class="intro-content">
+                <div class="intro-text">
+                    <p><strong>CareConect</strong> es la solución integral que transforma la forma en que se conectan los adultos mayores con profesionales certificados en cuidado y asistencia terapéutica.</p>
+                    <p>Eliminamos la informalidad del mercado de cuidados domiciliarios, ofreciendo una plataforma segura, transparente y eficiente que garantiza verificación rigurosa, matching inteligente y protección para ambas partes.</p>
+                    <p>Con más de <strong>107,000 adultos mayores en Jujuy</strong> (13.2% de la población) y un mercado de cuidados que supera los <strong>USD 500 millones anuales en Argentina</strong>, CareConect surge como respuesta a una necesidad crítica.</p>
+                </div>
+                <div class="intro-highlights">
+                    <div class="highlight-item">
+                        <div class="highlight-icon">✓</div>
+                        <div class="highlight-text">
+                            <h4>Verificación Rigurosa</h4>
+                            <p>Validación de credenciales, antecedentes penales y experiencia verificada.</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon">🎯</div>
+                        <div class="highlight-text">
+                            <h4>Matching Inteligente</h4>
+                            <p>Conectamos necesidades específicas con profesionales ideales.</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon">🛡️</div>
+                        <div class="highlight-text">
+                            <h4>Transparencia Total</h4>
+                            <p>Sistema bidireccional de calificaciones y reseñas verificadas.</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon">💳</div>
+                        <div class="highlight-text">
+                            <h4>Pagos Seguros</h4>
+                            <p>Protección para ambas partes con comisiones transparentes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="more-info reveal-on-scroll">
+                <a href="https://docs.google.com/document/d/1cfAvt9-xdZdpCEwIjiIjgJlQEPg0jNB5FDAJWT8Yr_M/edit?usp=sharing" target="_blank" rel="noopener noreferrer">📄 Más información sobre el proyecto completo →</a>
+            </div>
+        </section>
+
+        <section class="video-section reveal-on-scroll">
+            <h2 class="section-title light-text">🎬 Conoce Nuestro Proyecto</h2>
+            <div class="video-container">
+                <div class="video-placeholder">
+                    <strong>Pitch de CareConect</strong>
+                    <p>Insertar aquí el video de presentación del proyecto</p>
+                    <p style="font-size: 0.95rem; margin-top: 0.5rem; opacity: 0.7;">Dimensiones recomendadas: 16:9</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="caracteristicas" class="features">
+            <div class="features-container">
+                <h2 class="section-title">🌟 ¿Por qué CareConect?</h2>
+                <div class="features-grid">
+                    <div class="feature-card reveal-on-scroll">
+                        <div class="feature-icon">✓</div>
+                        <h3>Verificación Multinivel</h3>
+                        <p>Todos nuestros profesionales pasan por validación de credenciales, antecedentes penales y experiencia verificada para garantizar la seguridad.</p>
+                    </div>
+                    <div class="feature-card reveal-on-scroll">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Matching Inteligente</h3>
+                        <p>Algoritmo avanzado que conecta necesidades específicas con el profesional ideal según experiencia, ubicación y disponibilidad.</p>
+                    </div>
+                    <div class="feature-card reveal-on-scroll">
+                        <div class="feature-icon">📅</div>
+                        <h3>Gestión de Horarios</h3>
+                        <p>Sistema avanzado de calendario que sincroniza disponibilidad de profesionales con necesidades de usuarios en tiempo real.</p>
+                    </div>
+                    <div class="feature-card reveal-on-scroll">
+                        <div class="feature-icon">💳</div>
+                        <h3>Pagos Seguros</h3>
+                        <p>Sistema integrado de pagos con protección para ambas partes, comisiones transparentes y reportes financieros detallados.</p>
+                    </div>
+                    <div class="feature-card reveal-on-scroll">
+                        <div class="feature-icon">⭐</div>
+                        <h3>Calificaciones Verificadas</h3>
+                        <p>Sistema bidireccional de reseñas que garantiza transparencia, confianza y calidad en cada servicio prestado.</p>
+                    </div>
+                    <div class="feature-card reveal-on-scroll">
+                        <div class="feature-icon">📈</div>
+                        <h3>Escalable y Expansible</h3>
+                        <p>Modelo de negocio escalable que comienza con AT para adultos mayores y se expande hacia otros servicios de cuidado profesional.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about">
+            <div class="about-content reveal-on-scroll">
+                <div class="about-text">
+                    <h2 class="section-title light-text" style="text-align: left; margin-bottom: 2rem;">💡 El Proyecto CareConect</h2>
+                    <p><strong>CareConect</strong> nace como respuesta a una necesidad crítica en Jujuy: conectar a adultos mayores que requieren asistencia terapéutica con profesionales certificados de manera segura y eficiente.</p>
+                    <p>Con el <strong>15,7% de la población argentina mayor de 60 años</strong> y una proyección del 22% para 2050, el mercado de cuidados domiciliarios experimenta un crecimiento exponencial.</p>
+                    <p>Nuestra plataforma elimina la informalidad actual, ofreciendo <strong>verificación robusta, matching inteligente y transparencia total</strong> en cada transacción, generando confianza entre usuarios y profesionales.</p>
+                </div>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">107K</div>
+                        <div>Adultos mayores en Jujuy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">13.2%</div>
+                        <div>De la población jujeña</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">$500M</div>
+                        <div>Mercado anual en Argentina</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">6 meses</div>
+                        <div>Desarrollo y lanzamiento</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="simulador" class="simulator">
+            <h2 class="section-title reveal-on-scroll">📱 Simulador Interactivo de CareConect</h2>
+            <div class="phone-mockup">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <div class="app-header">
+                        <span style="font-size: 1.3rem; cursor: pointer;">☰</span>
+                        <span class="app-header-title">CareConect</span>
+                        <span style="font-size: 1.3rem; cursor: pointer;">🔔</span>
+                    </div>
+                    <div class="app-content">
+
+                        <div id="main-view" class="app-view">
+                            <div class="app-tabs">
+                                <button class="app-tab active" data-tab="buscar-tab">🔍 Buscar</button>
+                                <button class="app-tab" data-tab="horarios-tab">📅 Horarios</button>
+                                <button class="app-tab" data-tab="favoritos-tab">⭐ Favoritos</button>
+                            </div>
+                            
+                            <div id="buscar-tab" class="app-tab-content active">
+                                <input type="text" id="search-box" class="search-box" placeholder="Buscar profesional o especialidad...">
+                                
+                                <div class="app-section-title" style="margin-top: 0;">Filtros</div>
+                                <div class="filter-chips" id="filter-chips">
+                                    <button class="chip active" data-filter="todos">Todos</button>
+                                    <button class="chip" data-filter="terapeutico">A. Terapéutico</button>
+                                    <button class="chip" data-filter="geriatrico">Geriátrico</button>
+                                    <button class="chip" data-filter="enfermeria">Enfermería</button>
+                                </div>
+    
+                                <div class="app-section-title">🌟 Profesionales</div>
+                                <div id="professionals-list">
+                                    </div>
+                            </div>
+    
+                            <div id="horarios-tab" class="app-tab-content">
+                                <div class="app-section-title">📅 Selecciona Fecha</div>
+                                
+                                <div class="calendar-widget">
+                                    <div class="calendar-header">
+                                        <button style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">◀</button>
+                                        <div class="calendar-month">Octubre 2025</div>
+                                        <button style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">▶</button>
+                                    </div>
+                                    
+                                    <div class="calendar-grid" id="calendar-grid">
+                                        <div class="calendar-day header">L</div>
+                                        <div class="calendar-day header">M</div>
+                                        <div class="calendar-day header">X</div>
+                                        <div class="calendar-day header">J</div>
+                                        <div class="calendar-day header">V</div>
+                                        <div class="calendar-day header">S</div>
+                                        <div class="calendar-day header">D</div>
+                                        
+                                        <div class="calendar-day other-month">29</div>
+                                        <div class="calendar-day other-month">30</div>
+                                        <div class="calendar-day">1</div>
+                                        <div class="calendar-day">2</div>
+                                        <div class="calendar-day">3</div>
+                                        <div class="calendar-day">4</div>
+                                        <div class="calendar-day">5</div>
+                                        <div class="calendar-day">6</div>
+                                        <div class="calendar-day">7</div>
+                                        <div class="calendar-day">8</div>
+                                        <div class="calendar-day">9</div>
+                                        <div class="calendar-day">10</div>
+                                        <div class="calendar-day">11</div>
+                                        <div class="calendar-day available">12</div>
+                                        <div class="calendar-day available">13</div>
+                                        <div class="calendar-day available">14</div>
+                                        <div class="calendar-day available">15</div>
+                                        <div class="calendar-day available selected" data-day="Jue, 16 Oct">16</div>
+                                        <div class="calendar-day available" data-day="Vie, 17 Oct">17</div>
+                                        <div class="calendar-day available" data-day="Sáb, 18 Oct">18</div>
+                                        <div class="calendar-day available" data-day="Dom, 19 Oct">19</div>
+                                        <div class="calendar-day available" data-day="Lun, 20 Oct">20</div>
+                                        <div class="calendar-day available" data-day="Mar, 21 Oct">21</div>
+                                        <div class="calendar-day available" data-day="Mié, 22 Oct">22</div>
+                                        <div class="calendar-day available" data-day="Jue, 23 Oct">23</div>
+                                        <div class="calendar-day available" data-day="Vie, 24 Oct">24</div>
+                                        <div class="calendar-day">25</div>
+                                        <div class="calendar-day">26</div>
+                                    </div>
+                                </div>
+    
+                                <div class="app-section-title" id="schedule-title">🕐 Horarios Disponibles (Jue, 16 Oct)</div>
+                                <div class="time-slots" id="time-slots">
+                                    <div class="time-slot">08:00</div>
+                                    <div class="time-slot">09:00</div>
+                                    <div class="time-slot">10:00</div>
+                                    <div class="time-slot">11:00</div>
+                                    <div class="time-slot">14:00</div>
+                                    <div class="time-slot selected">15:00</div>
+                                    <div class="time-slot">16:00</div>
+                                    <div class="time-slot">17:00</div>
+                                </div>
+
+                                <button class="confirm-btn" id="confirm-booking-btn">Confirmar Cita</button>
+                            </div>
+    
+                            <div id="favoritos-tab" class="app-tab-content">
+                                <div class="app-section-title">⭐ Tus Profesionales Favoritos</div>
+                                <div id="favorites-list">
+                                    <div class="no-favorites" id="no-favorites-placeholder">
+                                        <span class="no-favorites-icon">💔</span>
+                                        Aún no tienes favoritos.
+                                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Presiona el corazón en el perfil de un profesional para añadirlo.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="profile-view" class="app-view">
+                            <div class="profile-header">
+                                <button class="profile-back-btn" id="profile-back-btn">←</button>
+                                <img src="https://i.pravatar.cc/150?img=68" alt="Avatar" class="profile-avatar" id="profile-avatar">
+                                <div class="profile-info">
+                                    <h3 id="profile-name">Nombre Profesional</h3>
+                                    <p id="profile-specialty">Especialidad</p>
+                                </div>
+                            </div>
+                            <div class="profile-body">
+                                <div class="profile-stats" style="display: flex; justify-content: space-around; background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 1.2rem; font-weight: bold; color: #667eea;">⭐ <span id="profile-rating">4.9</span></div>
+                                        <div style="font-size: 0.8rem; color: #777;"><span id="profile-reviews">127</span> reseñas</div>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 1.2rem; font-weight: bold; color: #667eea;">5+</div>
+                                        <div style="font-size: 0.8rem; color: #777;">años exp.</div>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 1.2rem; font-weight: bold; color: #667eea;">$ <span id="profile-price">5.000</span></div>
+                                        <div style="font-size: 0.8rem; color: #777;">por hora</div>
+                                    </div>
+                                </div>
+
+                                <h4>Acerca de mí</h4>
+                                <p id="profile-bio">
+                                    Soy un profesional dedicado con más de 5 años de experiencia en...
+                                </p>
+
+                                <h4>Especialidades</h4>
+                                <div class="profile-tags" id="profile-tags">
+                                    <span class="chip">Especialidad 1</span>
+                                    <span class="chip">Especialidad 2</span>
+                                </div>
+
+                                <button class="confirm-btn">Agendar una Cita</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="toast-notification" id="toast-notification">
+                        ¡Cita confirmada!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="equipo" class="team">
+            <h2 class="section-title light-text reveal-on-scroll">Conoce a Nuestro Equipo</h2>
+            <div class="team-grid">
+                
+                <div class="team-card reveal-on-scroll">
+                    <div class="team-avatar">
+                        <img src="https://i.postimg.cc/fRMVtGH4/oww.jpg" alt="Laura Anahi Sajama">
+                    </div>
+                    <div class="team-name">Laura Anahi Sajama</div>
+                    <div class="team-role">Analista Programadora</div>
+                </div>
+
+                <div class="team-card reveal-on-scroll">
+                    <div class="team-avatar">
+                        <img src="https://i.postimg.cc/FK2CGVkk/Office-cat-man.jpg" alt="Jorge Ariel Saravia">
+                    </div>
+                    <div class="team-name">Jorge Ariel Saravia</div>
+                    <div class="team-role">Analista Programador</div>
+                </div>
+
+                <div class="team-card reveal-on-scroll">
+                    <div class="team-avatar">
+                        <img src="https://i.postimg.cc/VN3Z4W0C/descarga-21.jpg" alt="Rodolfo Abraham Ugarte">
+                    </div>
+                    <div class="team-name">Rodolfo Abraham Ugarte</div>
+                    <div class="team-role">Analista Programador</div>
+                </div>
+                
+                <div class="team-card reveal-on-scroll">
+                    <div class="team-avatar">
+                        <img src="https://i.postimg.cc/YCB9c5KK/descarga-26.jpg" alt="Luciana Solange Vedia">
+                    </div>
+                    <div class="team-name">Luciana Solange Vedia</div>
+                    <div class="team-role">Analista Programadora</div>
+                </div>
+
+                <div class="team-card reveal-on-scroll">
+                    <div class="team-avatar">
+                        <img src="https://i.postimg.cc/FzGZtyzj/avatar.jpg" alt="Sebastian Mullicundo">
+                    </div>
+                    <div class="team-name">Sebastian Mullicundo</div>
+                    <div class="team-role">Analista Programador</div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p style="font-size: 1.2rem; font-weight: bold; margin-bottom: 1rem;">© 2025 CareConect - Todos los derechos reservados</p>
+        <p>
+            🎓 Facultad de Ingeniería - Carrera: Analista Programador Universitario
+        </p>
+        <p style="font-size: 0.95rem;">
+            Legislación y Ejercicio Profesional • Año 2025
+        </p>
+        <p style="margin-top: 1.5rem; font-size: 1rem;">📍 San Salvador de Jujuy, Argentina</p>
+        <p style="margin-top: 0.5rem; opacity: 0.8;">💙 Conectando Cuidado con Confianza</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // ---------------------------------
+            // 1. Lógica del Menú Hamburguesa
+            // ---------------------------------
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            const navLinks = navMenu.querySelectorAll('a');
+
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('is-active');
+                    menuToggle.classList.toggle('is-active');
+                    document.body.style.overflow = navMenu.classList.contains('is-active') ? 'hidden' : '';
+                });
+            }
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('is-active');
+                    menuToggle.classList.remove('is-active');
+                    document.body.style.overflow = '';
+                });
+            });
+
+
+            // ---------------------------------
+            // 2. Lógica de Animación en Scroll
+            // ---------------------------------
+            const revealElements = document.querySelectorAll('.reveal-on-scroll');
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+
+            const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
+            revealElements.forEach(el => scrollObserver.observe(el));
+
+            // ---------------------------------
+            // 3. Efecto Parallax en Hero
+            // ---------------------------------
+            const heroContent = document.getElementById('hero-content');
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                if (scrollY < 500) { // Solo aplicar cerca del hero
+                    heroContent.style.opacity = 1 - (scrollY / 400);
+                    heroContent.style.transform = `translateY(${scrollY * 0.4}px)`;
+                }
+            });
+
+
+            // ---------------------------------
+            // 4. LÓGICA DEL SIMULADOR
+            // ---------------------------------
+
+            // --- Base de Datos de Profesionales ---
+            const professionals = [
+                {
+                    id: 1,
+                    name: "Dr. Carlos Mendoza",
+                    specialty: "Acompañante Terapéutico",
+                    price: 5000,
+                    rating: 4.9,
+                    reviews: 127,
+                    avatar: "https://i.pravatar.cc/150?img=68",
+                    tags: ["terapeutico", "geriatrico"],
+                    isFavorite: false,
+                    bio: "Soy un acompañante terapéutico con más de 8 años de experiencia, especializado en el cuidado de adultos mayores y pacientes con movilidad reducida. Mi enfoque es empático y profesional."
+                },
+                {
+                    id: 2,
+                    name: "Lic. María Fernández",
+                    specialty: "Enfermera Especializada",
+                    price: 6500,
+                    rating: 5.0,
+                    reviews: 89,
+                    avatar: "https://i.pravatar.cc/150?img=33",
+                    tags: ["enfermeria"],
+                    isFavorite: true, // Favorito por defecto
+                    bio: "Enfermera profesional con 12 años de experiencia en cuidados intensivos y domiciliarios. Certificada en geriatría y curación de heridas."
+                },
+                {
+                    id: 3,
+                    name: "Lic. Roberto Silva",
+                    specialty: "Cuidador Geriátrico",
+                    price: 4800,
+                    rating: 4.8,
+                    reviews: 156,
+                    avatar: "https://i.pravatar.cc/150?img=59",
+                    tags: ["geriatrico"],
+                    isFavorite: false,
+                    bio: "Dedicado al cuidado y compañía de adultos mayores. Ofrezco asistencia en tareas diarias, administración de medicamentos y actividades recreativas."
+                },
+                {
+                    id: 4,
+                    name: "Lic. Ana Gutiérrez",
+                    specialty: "Fisioterapeuta",
+                    price: 7000,
+                    rating: 4.9,
+                    reviews: 203,
+                    avatar: "https://i.pravatar.cc/150?img=12",
+                    tags: ["terapeutico"],
+                    isFavorite: false,
+                    bio: "Fisioterapeuta con 10 años de experiencia en rehabilitación post-operatoria y kinesiología respiratoria. Trabajo con pacientes de todas las edades."
+                }
+            ];
+
+            const professionalsList = document.getElementById('professionals-list');
+            const favoritesList = document.getElementById('favorites-list');
+            const noFavoritesPlaceholder = document.getElementById('no-favorites-placeholder');
+            const searchBox = document.getElementById('search-box');
+            const filterChips = document.getElementById('filter-chips');
+
+            // --- Función para Renderizar Profesionales ---
+            function renderProfessionals(list, container) {
+                container.innerHTML = ''; // Limpiar lista
+                if (list.length === 0) {
+                    container.innerHTML = '<p style="color: #999; text-align: center; padding: 1rem;">No se encontraron profesionales.</p>';
+                    return;
+                }
+                
+                list.forEach(pro => {
+                    const card = document.createElement('div');
+                    card.className = 'professional-card';
+                    card.dataset.id = pro.id; // Para identificar al hacer clic
+                    
+                    const heartClass = pro.isFavorite ? 'favorited' : '';
+                    
+                    card.innerHTML = `
+                        <img src="${pro.avatar}" alt="${pro.name}" class="pro-avatar">
+                        <div class="pro-info">
+                            <div class="pro-name">${pro.name}</div>
+                            <div class="pro-specialty">${pro.specialty}</div>
+                            <div class="pro-rating">⭐⭐⭐⭐⭐ ${pro.rating} (${pro.reviews})</div>
+                            <span class="pro-badge">✓ Verificado</span>
+                        </div>
+                        <div class="pro-price">$${pro.price.toLocaleString('es-AR')}</div>
+                        <span class="pro-favorite ${heartClass}" data-id="${pro.id}">${pro.isFavorite ? '❤️' : '♡'}</span>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+
+            // --- Función para Renderizar Favoritos ---
+            function renderFavorites() {
+                const favs = professionals.filter(pro => pro.isFavorite);
+                if (favs.length > 0) {
+                    noFavoritesPlaceholder.style.display = 'none';
+                    renderProfessionals(favs, favoritesList);
+                } else {
+                    favoritesList.innerHTML = '';
+                    noFavoritesPlaceholder.style.display = 'block';
+                }
+            }
+
+            // --- Función para Filtrar y Renderizar ---
+            let currentFilter = 'todos';
+            let currentSearchTerm = '';
+
+            function filterAndRender() {
+                let filtered = [...professionals];
+
+                // 1. Filtrar por búsqueda
+                if (currentSearchTerm) {
+                    filtered = filtered.filter(pro => 
+                        pro.name.toLowerCase().includes(currentSearchTerm) ||
+                        pro.specialty.toLowerCase().includes(currentSearchTerm)
+                    );
+                }
+
+                // 2. Filtrar por chip
+                if (currentFilter !== 'todos') {
+                    filtered = filtered.filter(pro => pro.tags.includes(currentFilter));
+                }
+
+                renderProfessionals(filtered, professionalsList);
+            }
+
+            // --- Event Listeners para Filtros ---
+            searchBox.addEventListener('input', (e) => {
+                currentSearchTerm = e.target.value.toLowerCase();
+                filterAndRender();
+            });
+
+            filterChips.addEventListener('click', (e) => {
+                const chip = e.target.closest('.chip');
+                if (!chip) return;
+
+                filterChips.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                currentFilter = chip.dataset.filter;
+                filterAndRender();
+            });
+
+            // --- Lógica de Pestañas del Simulador ---
+            const appTabs = document.querySelectorAll('.app-tab');
+            const tabContents = document.querySelectorAll('.app-tab-content');
+
+            appTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    appTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const targetTabId = tab.dataset.tab;
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === targetTabId) {
+                            content.classList.add('active');
+                            // Si cambiamos a favoritos, recargar la lista
+                            if (targetTabId === 'favoritos-tab') {
+                                renderFavorites();
+                            }
+                        }
+                    });
+                });
+            });
+
+            // --- Lógica de Navegación a Perfil ---
+            const mainView = document.getElementById('main-view');
+            const profileView = document.getElementById('profile-view');
+            const profileBackBtn = document.getElementById('profile-back-btn');
+
+            function showProfile(id) {
+                const pro = professionals.find(p => p.id == id);
+                if (!pro) return;
+
+                // Llenar datos del perfil
+                document.getElementById('profile-avatar').src = pro.avatar;
+                document.getElementById('profile-name').textContent = pro.name;
+                document.getElementById('profile-specialty').textContent = pro.specialty;
+                document.getElementById('profile-rating').textContent = pro.rating;
+                document.getElementById('profile-reviews').textContent = pro.reviews;
+                document.getElementById('profile-price').textContent = pro.price.toLocaleString('es-AR');
+                document.getElementById('profile-bio').textContent = pro.bio;
+
+                const tagsContainer = document.getElementById('profile-tags');
+                tagsContainer.innerHTML = '';
+                pro.tags.forEach(tag => {
+                    const chip = document.createElement('span');
+                    chip.className = 'chip';
+                    chip.textContent = tag.charAt(0).toUpperCase() + tag.slice(1);
+                    tagsContainer.appendChild(chip);
+                });
+
+                // Mostrar vista
+                mainView.classList.add('navigating-to-profile');
+                profileView.classList.add('is-visible');
+            }
+
+            function hideProfile() {
+                mainView.classList.remove('navigating-to-profile');
+                profileView.classList.remove('is-visible');
+            }
+
+            profileBackBtn.addEventListener('click', hideProfile);
+
+            // --- Event Delegation para Clics en Tarjetas y Corazones ---
+            mainView.addEventListener('click', (e) => {
+                const heart = e.target.closest('.pro-favorite');
+                const card = e.target.closest('.professional-card');
+
+                if (heart) {
+                    e.stopPropagation(); // Evitar que se abra el perfil
+                    const id = heart.dataset.id;
+                    toggleFavorite(id);
+                } else if (card) {
+                    const id = card.dataset.id;
+                    showProfile(id);
+                }
+            });
+
+            function toggleFavorite(id) {
+                const pro = professionals.find(p => p.id == id);
+                if (!pro) return;
+                
+                pro.isFavorite = !pro.isFavorite;
+
+                // Actualizar todos los corazones en la UI (en ambas listas)
+                const allHearts = document.querySelectorAll(`.pro-favorite[data-id="${id}"]`);
+                allHearts.forEach(heart => {
+                    heart.classList.toggle('favorited', pro.isFavorite);
+                    heart.textContent = pro.isFavorite ? '❤️' : '♡';
+                });
+
+                // Re-renderizar favoritos si estamos en esa pestaña
+                if (document.getElementById('favoritos-tab').classList.contains('active')) {
+                    renderFavorites();
+                }
+            }
+            
+            // --- Lógica del Calendario y Cita ---
+            const calendarGrid = document.getElementById('calendar-grid');
+            const scheduleTitle = document.getElementById('schedule-title');
+            const timeSlots = document.getElementById('time-slots');
+            const confirmBtn = document.getElementById('confirm-booking-btn');
+            const toast = document.getElementById('toast-notification');
+
+            calendarGrid.addEventListener('click', (e) => {
+                const day = e.target.closest('.calendar-day.available');
+                if (!day) return;
+
+                calendarGrid.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+                day.classList.add('selected');
+                scheduleTitle.textContent = `🕐 Horarios Disponibles (${day.dataset.day || ''})`;
+            });
+
+            timeSlots.addEventListener('click', (e) => {
+                const slot = e.target.closest('.time-slot');
+                if (!slot) return;
+                timeSlots.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                slot.classList.add('selected');
+            });
+
+            confirmBtn.addEventListener('click', () => {
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000); // Ocultar después de 3 segundos
+            });
+
+            // --- Carga Inicial ---
+            renderProfessionals(professionals, professionalsList);
+            renderFavorites();
+        });
+
+    </script>
+</body>
+</html>
